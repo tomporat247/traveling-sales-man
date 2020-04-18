@@ -1,22 +1,27 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import Map from './map/Map'
+import MyMap from './map/MyMap'
 import SideNav from "./side-nav/SideNav";
+import {LatLng} from "./types/lat-lng";
 
-const App = () => (
-    <div className='appContainer'>
-        <div className='map'>
-            <Map
-                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
-                loadingElement={<div style={{height: `100%`}}/>}
-                containerElement={<div style={{height: `100vh`}}/>}
-                mapElement={<div style={{height: `100%`}}/>}
-            />
+const App = () => {
+    const [points, setPoints] = useState<LatLng[]>([]);
+    return (
+        <div className='appContainer'>
+            <div className='map'>
+                <MyMap
+                    points={points}
+                    lines={[]}
+                    onPointAdded={point => setPoints([...points, point])}
+                    onPointRemoved={pointToRemove => setPoints(
+                        points.filter(point => point[0] !== pointToRemove[0] || point[1] !== pointToRemove[1]))}
+                />
+            </div>
+            <div className='side-nav'>
+                <SideNav points={points}/>
+            </div>
         </div>
-        <div className='side-nav'>
-            <SideNav/>
-        </div>
-    </div>
-);
+    )
+};
 
 export default App;
