@@ -1,0 +1,11 @@
+.appContainer {
+    display: flex;
+}
+
+.map {
+    flex: 8;
+}
+
+.side-nav {
+    flex: 2;
+}
