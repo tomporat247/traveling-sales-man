@@ -4,6 +4,7 @@ import {calculateRouteDistance, createIndexArray, shuffleArray} from "./algorith
 import {LatLng} from "../types/lat-lng";
 import {crossoverDNAs, mutateDNA} from "./dna-utils";
 import {Generation} from "./types/generation";
+import {BestRoute} from "./types/best-route";
 
 let params: AlgoParams;
 let points: LatLng[];
@@ -58,15 +59,20 @@ const naturalSelection = () => {
 
 export const getGeneration = (): Generation => generation;
 
-export const getBestRoute = (): LatLng[] =>
-    population.reduce((acc: DNA, curr: DNA) => acc.fitness > curr.fitness ? acc : curr).route
-        .map(pointIndex => points[pointIndex]);
+export const getBestRoute = (): BestRoute => {
+    const bestDNA: DNA = population.reduce((acc: DNA, curr: DNA) => acc.fitness > curr.fitness ? acc : curr);
+    return {
+        route: bestDNA.route.map(pointIndex => points[pointIndex]),
+        totalDistance: (1 / bestDNA.fitness)
+    };
+};
 
 export const evolve = () => {
     const start: number = performance.now();
     naturalSelection();
     calculatePopulationFitness();
     const end: number = performance.now();
+
     generation.count++;
     generation.executionTimeInMS = end - start;
 };

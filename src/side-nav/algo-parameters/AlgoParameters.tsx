@@ -7,7 +7,7 @@ const AlgoParameters = (props: { disabled: boolean, populationSize: number, onPo
         <div>
             <SliderInput title='Population size' value={props.populationSize} disabled={props.disabled}
                          onValueChange={props.onPopulationSizeChange}
-                         step={5} max={300}/>
+                         step={5} max={800}/>
             <SliderInput title='Mutation rate' value={props.mutationRate} disabled={props.disabled}
                          onValueChange={props.onMutationRateChange}
                          step={0.01} max={1}/>

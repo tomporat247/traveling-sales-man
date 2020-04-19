@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import './SideNav.css'
 import {LatLng} from "../types/lat-lng";
 import Divider from "@material-ui/core/Divider";
@@ -8,7 +8,10 @@ import {Generation} from "../algorithm/types/generation";
 
 const SideNav = (props: {
     points: LatLng[],
-    generation: Generation,
+    isRunning: boolean,
+    generation?: Generation,
+    bestRouteDistance?: number,
+    bestRouteEverDistance?: number,
     populationSize: number,
     onPopulationSizeChange: (size: number) => any,
     mutationRate: number,
@@ -16,17 +19,10 @@ const SideNav = (props: {
     onStart: () => any,
     onStop: () => any
 }) => {
-    const [isRunning, setIsRunning] = useState(false);
 
-    const start = () => {
-        setIsRunning(true);
-        props.onStart();
-    };
+    const start = () => props.onStart();
 
-    const stop = () => {
-        setIsRunning(false);
-        props.onStop();
-    };
+    const stop = () => props.onStop();
 
 
     return (
@@ -36,7 +32,7 @@ const SideNav = (props: {
                 <div className='divider'>
                     <Divider/>
                 </div>
-                <AlgoParameters disabled={isRunning} populationSize={props.populationSize}
+                <AlgoParameters disabled={props.isRunning} populationSize={props.populationSize}
                                 onPopulationSizeChange={props.onPopulationSizeChange} mutationRate={props.mutationRate}
                                 onMutationRateChange={props.onMutationRateChange}/>
             </div>
@@ -46,17 +42,19 @@ const SideNav = (props: {
             <div>
                 {props.generation && <div>Generation: {props.generation.count}</div>}
                 {props.generation&& <div>Calculation time: {props.generation.executionTimeInMS}</div>}
+                {props.bestRouteEverDistance && <div>Best ever distance: {props.bestRouteEverDistance}</div>}
+                {props.bestRouteDistance && <div>Current best distance: {props.bestRouteDistance}</div>}
             </div>
             <div className='divider'>
                 <Divider/>
             </div>
             <div>
                 <Button className='action-button' variant="contained" color="primary"
-                        disabled={isRunning} onClick={start}>
+                        disabled={props.isRunning} onClick={start}>
                     Start
                 </Button>
                 <Button className='action-button' variant="contained" color="secondary"
-                        disabled={!isRunning} onClick={stop}>
+                        disabled={!props.isRunning} onClick={stop}>
                     Stop
                 </Button>
             </div>
