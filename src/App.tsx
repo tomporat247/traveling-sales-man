@@ -12,7 +12,7 @@ const App = () => {
     const [points, setPoints] = useState<LatLng[]>([]);
     const [bestRoute, setBestRoute] = useState<BestRoute>();
     const [bestRouteEver, setBestRouteEver] = useState<BestRoute>();
-    const [populationSize, setPopulationSize] = useState(20);
+    const [populationSize, setPopulationSize] = useState(200);
     const [mutationRate, setMutationRate] = useState(0.02);
     const [isRunning, setIsRunning] = useState(false);
     const [generation, setGeneration] = useState<Generation>();
