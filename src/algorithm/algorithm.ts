@@ -3,11 +3,12 @@ import {DNA} from "./types/DNA";
 import {calculateRouteDistance, createIndexArray, shuffleArray} from "./algorithm-utils";
 import {LatLng} from "../types/lat-lng";
 import {crossoverDNAs, mutateDNA} from "./dna-utils";
+import {Generation} from "./types/generation";
 
 let params: AlgoParams;
 let points: LatLng[];
 let population: DNA[];
-let generation: number;
+let generation: Generation;
 
 const randomizeRoute = (): number[] => {
     return shuffleArray(createIndexArray(points.length));
@@ -53,25 +54,28 @@ const naturalSelection = () => {
         newPopulation.push(child);
     });
     population = newPopulation;
-    generation++;
 };
 
-export const getGeneratoion = () => generation;
+export const getGeneration = (): Generation => generation;
 
 export const getBestRoute = (): LatLng[] =>
     population.reduce((acc: DNA, curr: DNA) => acc.fitness > curr.fitness ? acc : curr).route
         .map(pointIndex => points[pointIndex]);
 
 export const evolve = () => {
+    const start: number = performance.now();
     naturalSelection();
     calculatePopulationFitness();
+    const end: number = performance.now();
+    generation.count++;
+    generation.executionTimeInMS = end - start;
 };
 
 export const initAlgorithm = (algoParams: AlgoParams, travelPoints: LatLng[]) => {
     params = algoParams;
     population = [];
     points = travelPoints;
-    generation = 0;
+    generation = {count: 0, executionTimeInMS: -1};
 
     for (let i = 0; i < params.populationSize; i++) {
         population.push({fitness: -1, route: randomizeRoute()})

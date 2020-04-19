@@ -3,7 +3,7 @@ import './App.css';
 import MyMap from './map/MyMap'
 import SideNav from "./side-nav/SideNav";
 import {LatLng} from "./types/lat-lng";
-import {evolve, getBestRoute, initAlgorithm} from "./algorithm/algorithm";
+import {evolve, getBestRoute, getGeneration, initAlgorithm} from "./algorithm/algorithm";
 
 const App = () => {
     const [points, setPoints] = useState<LatLng[]>([]);
@@ -31,7 +31,8 @@ const App = () => {
             <div className='side-nav'>
                 <SideNav points={points} populationSize={populationSize}
                          onPopulationSizeChange={setPopulationSize} mutationRate={mutationRate}
-                         onMutationRateChange={setMutationRate} onStart={startAlgorithm} onStop={console.log}/>
+                         onMutationRateChange={setMutationRate} onStart={startAlgorithm} onStop={console.log}
+                generation={getGeneration()}/>
             </div>
         </div>
     )
