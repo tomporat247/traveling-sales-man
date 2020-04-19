@@ -53,7 +53,7 @@ const SideNav = (props: {
             </div>
             <div>
                 <Button className='action-button' variant="contained" color="primary"
-                        disabled={props.isRunning} onClick={start}>
+                        disabled={props.isRunning || props.points.length === 0} onClick={start}>
                     Start
                 </Button>
                 <Button className='action-button' variant="contained" color="secondary"
