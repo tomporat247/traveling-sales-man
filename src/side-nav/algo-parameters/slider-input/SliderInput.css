@@ -1,0 +1,13 @@
+.slider-input-container {
+    display: flex;
+    align-items: center;
+}
+
+.content {
+    flex: 5;
+}
+
+.trailing {
+    flex: 1;
+    margin-left: 5%;
+}
