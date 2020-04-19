@@ -18,7 +18,7 @@ const App = () => {
                 />
             </div>
             <div className='side-nav'>
-                <SideNav points={points}/>
+                <SideNav points={points} onAlgoParamsChange={console.log} onStart={console.log} onStop={console.log}/>
             </div>
         </div>
     )

@@ -4,11 +4,22 @@ import {LatLng} from "../types/lat-lng";
 import Divider from "@material-ui/core/Divider";
 import Button from '@material-ui/core/Button';
 import AlgoParameters from "./algo-parameters/AlgoParameters";
+import {AlgoParams} from "../types/algo-params";
 
-const SideNav = (props: { points: LatLng[] }) => {
-    const [populationSize, setPopulationSize] = useState(20);
-    const [mutationRate, setMutationRate] = useState(0.02);
+const SideNav = (props: { points: LatLng[], onAlgoParamsChange: (params: AlgoParams) => any, onStart: () => any, onStop: () => any }) => {
     const [isRunning, setIsRunning] = useState(false);
+
+    const start = () => {
+        setIsRunning(true);
+        props.onStart();
+    };
+
+    const stop = () => {
+        setIsRunning(false);
+        props.onStop();
+    };
+
+
     return (
         <div id='side-nav-container'>
             <div>
@@ -16,19 +27,18 @@ const SideNav = (props: { points: LatLng[] }) => {
                 <div className='divider'>
                     <Divider/>
                 </div>
-                <AlgoParameters populationSize={populationSize} onPopulationSizeChange={setPopulationSize}
-                                mutationRate={mutationRate} onMutationRateChange={setMutationRate}/>
+                <AlgoParameters disabled={isRunning} onAlgoParamsChange={props.onAlgoParamsChange}/>
                 <div className='divider'>
                     <Divider/>
                 </div>
             </div>
             <div>
-                <Button className='action-button' variant="contained" color="primary" disabled={isRunning}
-                        onClick={() => setIsRunning(true)}>
+                <Button className='action-button' variant="contained" color="primary"
+                        disabled={isRunning} onClick={start}>
                     Start
                 </Button>
-                <Button className='action-button' variant="contained" color="secondary" disabled={!isRunning}
-                        onClick={() => setIsRunning(false)}>
+                <Button className='action-button' variant="contained" color="secondary"
+                        disabled={!isRunning} onClick={stop}>
                     Stop
                 </Button>
             </div>
