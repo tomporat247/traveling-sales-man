@@ -4,7 +4,7 @@ import {Map, TileLayer, Marker, Polyline} from 'react-leaflet';
 
 const MyMap = (props: {
     points: LatLng[],
-    lines: LatLng[][],
+    route: LatLng[],
     onPointAdded: (point: LatLng) => any,
     onPointRemoved: (point: LatLng) => any
 }) =>
@@ -16,7 +16,7 @@ const MyMap = (props: {
         />
         {props.points.map(point => <Marker key={point[0].toString() + point[1].toString()} position={point}
                                            onClick={(e: any) => props.onPointRemoved([e.latlng.lat, e.latlng.lng])}/>)}
-        {props.lines.map(line => <Polyline positions={line} />)}
+        <Polyline positions={props.route} />
     </Map>;
 
 export default MyMap;

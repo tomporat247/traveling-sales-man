@@ -1,28 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import SliderInput from "./slider-input/SliderInput";
-import {AlgoParams} from "../../types/algo-params";
 
-const AlgoParameters = (props: { disabled: boolean, onAlgoParamsChange: (value: AlgoParams) => any}) => {
-    const [populationSize, setPopulationSize] = useState(20);
-    const [mutationRate, setMutationRate] = useState(0.02);
-
-    const updatePopulationSize = (size: number) => {
-        setPopulationSize(size);
-        props.onAlgoParamsChange({mutationRate, populationSize});
-    };
-
-    const updateMutationRate = (rate: number) => {
-        setMutationRate(rate);
-        props.onAlgoParamsChange({mutationRate, populationSize});
-    };
+const AlgoParameters = (props: { disabled: boolean, populationSize: number, onPopulationSizeChange: (size: number) => any, mutationRate: number, onMutationRateChange: (rate: number) => any}) => {
 
     return (
         <div>
-            <SliderInput title='Population size' value={populationSize} disabled={props.disabled}
-                         onValueChange={updatePopulationSize}
+            <SliderInput title='Population size' value={props.populationSize} disabled={props.disabled}
+                         onValueChange={props.onPopulationSizeChange}
                          step={5} max={300}/>
-            <SliderInput title='Mutation rate' value={mutationRate} disabled={props.disabled}
-                         onValueChange={updateMutationRate}
+            <SliderInput title='Mutation rate' value={props.mutationRate} disabled={props.disabled}
+                         onValueChange={props.onMutationRateChange}
                          step={0.01} max={1}/>
         </div>
     );
