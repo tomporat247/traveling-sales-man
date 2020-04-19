@@ -5,10 +5,12 @@ import Divider from "@material-ui/core/Divider";
 import Button from '@material-ui/core/Button';
 import AlgoParameters from "./algo-parameters/AlgoParameters";
 import {Generation} from "../algorithm/types/generation";
+import {numberWithCommas} from "../utils/general-utils";
 
 const SideNav = (props: {
     points: LatLng[],
     isRunning: boolean,
+    totalCombinations: number,
     generation?: Generation,
     bestRouteDistance?: number,
     bestRouteEverDistance?: number,
@@ -28,7 +30,8 @@ const SideNav = (props: {
     return (
         <div id='side-nav-container'>
             <div>
-                Point amount: {props.points.length}
+                <div>Point amount: {props.points.length}</div>
+                <div>Total combinations: {numberWithCommas(props.totalCombinations)}</div>
                 <div className='divider'>
                     <Divider/>
                 </div>
@@ -42,8 +45,8 @@ const SideNav = (props: {
             <div>
                 {props.generation && <div>Generation: {props.generation.count}</div>}
                 {props.generation&& <div>Calculation time: {props.generation.executionTimeInMS}</div>}
-                {props.bestRouteEverDistance && <div>Best ever distance: {props.bestRouteEverDistance}</div>}
-                {props.bestRouteDistance && <div>Current best distance: {props.bestRouteDistance}</div>}
+                {props.bestRouteEverDistance && <div>Best ever: {props.bestRouteEverDistance}</div>}
+                {props.bestRouteDistance && <div>Current best: {props.bestRouteDistance}</div>}
             </div>
             <div className='divider'>
                 <Divider/>

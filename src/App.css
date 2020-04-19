@@ -3,9 +3,9 @@
 }
 
 .map {
-    flex: 8;
+    flex: 4;
 }
 
 .side-nav {
-    flex: 2;
+    flex: 1;
 }
