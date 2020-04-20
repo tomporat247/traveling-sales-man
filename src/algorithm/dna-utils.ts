@@ -14,8 +14,7 @@ export const crossoverDNAs = (partnerA: DNA, partnerB: DNA): DNA => {
         childP1.push(partnerA.route[i]);
     }
 
-    const childP2: number[] =
-        partnerB.route.filter(cityIndex => childP1.findIndex(index => index === cityIndex) === -1);
+    const childP2: number[] = partnerB.route.filter(cityIndex => !childP1.includes(cityIndex));
 
     child.route = childP1.concat(childP2);
     return child
