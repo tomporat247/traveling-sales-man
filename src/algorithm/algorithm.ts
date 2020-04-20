@@ -13,13 +13,10 @@ let generation: Generation;
 
 const randomizeRoute = (): number[] => [0, ...shuffleArray(createIndexArray(points.length, 1))];
 
-const calculateDNAFitness = (dna: DNA) => {
+const calculateDNAFitness = (dna: DNA) =>
     dna.fitness = 1 / (calculateRouteDistance(dna.route.map(index => points[index])) ** 4);
-};
 
-const calculatePopulationFitness = () => {
-    population.forEach(calculateDNAFitness);
-};
+const calculatePopulationFitness = () => population.forEach(calculateDNAFitness);
 
 const selectDNAForBreeding = (totalFitness: number): DNA => {
     const random: number = Math.random();
