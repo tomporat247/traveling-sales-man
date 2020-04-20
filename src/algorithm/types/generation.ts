@@ -1,4 +1,4 @@
 export interface Generation {
     count: number;
-    executionTimeInMS: number;
+    executionTime: number;
 }

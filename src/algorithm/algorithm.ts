@@ -66,14 +66,14 @@ export const evolve = () => {
     const end: number = performance.now();
 
     generation.count++;
-    generation.executionTimeInMS = end - start;
+    generation.executionTime = end - start;
 };
 
 export const initAlgorithm = (algoParams: AlgoParams, travelPoints: LatLng[]) => {
     params = algoParams;
     population = [];
     points = travelPoints;
-    generation = {count: 0, executionTimeInMS: -1};
+    generation = {count: 0, executionTime: -1};
 
     for (let i = 0; i < params.populationSize; i++) {
         population.push({fitness: -1, route: randomizeRoute()})
