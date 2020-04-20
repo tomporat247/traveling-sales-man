@@ -11,10 +11,13 @@ let points: LatLng[];
 let population: DNA[];
 let generation: Generation;
 
-const randomizeRoute = (): number[] => [0, ...shuffleArray(createIndexArray(points.length, 1))];
+const randomizeRoute = (): number[] => shuffleArray(createIndexArray(points.length, 1));
+
+const getDNAFullLatLngRoute = (dna: DNA): LatLng[] =>
+    [points[0], ...dna.route.map(index => points[index]), points[0]];
 
 const calculateDNAFitness = (dna: DNA) =>
-    dna.fitness = 1 / (calculateRouteDistance(dna.route.map(index => points[index])) ** 4);
+    dna.fitness = 1 / (calculateRouteDistance(getDNAFullLatLngRoute(dna)) ** 4);
 
 const calculatePopulationFitness = () => population.forEach(calculateDNAFitness);
 
@@ -51,7 +54,7 @@ export const getGeneration = (): Generation => generation;
 export const getBestRoute = (): BestRoute => {
     const bestDNA: DNA = population.reduce((acc: DNA, curr: DNA) => acc.fitness > curr.fitness ? acc : curr);
     return {
-        route: bestDNA.route.map(pointIndex => points[pointIndex]),
+        route: getDNAFullLatLngRoute(bestDNA),
         totalDistance: (1 / bestDNA.fitness)
     };
 };
