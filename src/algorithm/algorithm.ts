@@ -16,18 +16,12 @@ const randomizeRoute = (): number[] => {
 };
 
 const calculateDNAFitness = (dna: DNA) => {
-    if (dna.fitness === -1) {
-        dna.fitness = 1 / calculateRouteDistance(dna.route.map(index => points[index]));
-    }
+    dna.fitness = 1 / calculateRouteDistance(dna.route.map(index => points[index]));
 };
 
 const calculatePopulationFitness = () => {
     population.forEach(calculateDNAFitness);
 };
-
-// const sortPopulationByFitness = () => {
-//     population.sort((a: DNA, b: DNA) => b.fitness - a.fitness);
-// };
 
 const selectDNAForBreeding = (totalFitness: number): DNA => {
     const random: number = Math.random();
@@ -44,12 +38,12 @@ const selectDNAForBreeding = (totalFitness: number): DNA => {
 };
 
 const naturalSelection = () => {
-    const total: number = population.reduce((acc: number, curr: DNA) => acc + curr.fitness, 0);
+    const totalFitness: number = population.reduce((acc: number, curr: DNA) => acc + curr.fitness, 0);
     const newPopulation: DNA[] = [];
 
     population.forEach(() => {
-        const partnerA: DNA = selectDNAForBreeding(total);
-        const partnerB: DNA = selectDNAForBreeding(total);
+        const partnerA: DNA = selectDNAForBreeding(totalFitness);
+        const partnerB: DNA = selectDNAForBreeding(totalFitness);
         const child: DNA = crossoverDNAs(partnerA, partnerB);
         mutateDNA(child, params.mutationRate);
         newPopulation.push(child);

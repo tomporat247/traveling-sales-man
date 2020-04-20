@@ -31,7 +31,7 @@ const SideNav = (props: {
         <div id='side-nav-container'>
             <div>
                 <p>Point amount: {props.points.length}</p>
-                <p>Total combinations: {numberWithCommas(props.totalCombinations)}</p>
+                <p>Combinations: {numberWithCommas(props.totalCombinations)} ({props.totalCombinations.toString().length})</p>
                 <div className='divider'>
                     <Divider/>
                 </div>
@@ -44,7 +44,7 @@ const SideNav = (props: {
             </div>
             <div>
                 {props.generation && <p>Generation: {props.generation.count}</p>}
-                {props.generation&& <p>Calculation time: {props.generation.executionTimeInMS}</p>}
+                {props.generation && <p>Calculation time: {props.generation.executionTimeInMS}</p>}
                 {props.bestRouteEverDistance && <p>Best ever: {props.bestRouteEverDistance}</p>}
                 {props.bestRouteDistance && <p>Current best: {props.bestRouteDistance}</p>}
             </div>
