@@ -1,6 +1,7 @@
 import {LatLng} from "../types/lat-lng";
 
-export const createIndexArray = (maxIndex: number) => Array.from(Array(maxIndex).keys());
+export const createIndexArray = (maxIndex: number, minIndex: number = 0) =>
+    Array.from(Array(maxIndex - minIndex).keys()).map(index => index + minIndex);
 
 export const shuffleArray = <T>(array: T[]): T[] => {
     let currentIndex: number = array.length;

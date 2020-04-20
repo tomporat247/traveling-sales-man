@@ -11,9 +11,7 @@ let points: LatLng[];
 let population: DNA[];
 let generation: Generation;
 
-const randomizeRoute = (): number[] => {
-    return shuffleArray(createIndexArray(points.length));
-};
+const randomizeRoute = (): number[] => [0, ...shuffleArray(createIndexArray(points.length, 1))];
 
 const calculateDNAFitness = (dna: DNA) => {
     dna.fitness = 1 / calculateRouteDistance(dna.route.map(index => points[index]));
@@ -23,6 +21,7 @@ const calculatePopulationFitness = () => {
     population.forEach(calculateDNAFitness);
 };
 
+// TODO: Make better routes more likely to be selected (maybe pow)
 const selectDNAForBreeding = (totalFitness: number): DNA => {
     const random: number = Math.random();
     let probability = 0;
