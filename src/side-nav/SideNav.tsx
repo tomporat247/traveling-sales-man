@@ -44,7 +44,7 @@ const SideNav = (props: {
             </div>
             <div>
                 {props.generation && <p>Generation: {props.generation.count}</p>}
-                {props.generation && <p>Calculation time: {props.generation.executionTimeInMS}</p>}
+                {props.generation && <p>Calculation time: {props.generation.executionTime}</p>}
                 {props.bestRouteEverDistance && <p>Best ever: {props.bestRouteEverDistance}</p>}
                 {props.bestRouteDistance && <p>Current best: {props.bestRouteDistance}</p>}
             </div>
