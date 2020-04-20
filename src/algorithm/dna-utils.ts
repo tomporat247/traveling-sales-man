@@ -1,33 +1,36 @@
 import {DNA} from "./types/DNA";
 
+const getDNARouteRandomIndex = (dna: DNA) => Math.floor(Math.random() * dna.route.length);
+
 export const crossoverDNAs = (partnerA: DNA, partnerB: DNA): DNA => {
     const child: DNA = {fitness: -1, route: []};
-    const childP1: number[] = [];
+    const firstRoutePart: number[] = [];
 
-    const geneA: number = Math.floor(Math.random() * partnerA.route.length);
-    const geneB: number = Math.floor(Math.random() * partnerA.route.length);
+    const geneA: number = getDNARouteRandomIndex(partnerA);
+    const geneB: number = getDNARouteRandomIndex(partnerB);
 
     const startGene: number = Math.min(geneA, geneB);
     const endGene: number = Math.max(geneA, geneB);
 
     for (let i = startGene; i < endGene; i++) {
-        childP1.push(partnerA.route[i]);
+        firstRoutePart.push(partnerA.route[i]);
     }
 
-    const childP2: number[] = partnerB.route.filter(cityIndex => !childP1.includes(cityIndex));
-
-    child.route = [...childP1, ...childP2];
+    const secondRoutePart: number[] = partnerB.route.filter(cityIndex => !firstRoutePart.includes(cityIndex));
+    child.route = [...firstRoutePart, ...secondRoutePart];
 
     return child
 };
 
 export const mutateDNA = (dna: DNA, mutationRate: number) => {
-    for (let i = 1; i < dna.route.length; i++) {
-        if (Math.random() < mutationRate) {
-            const swapWithIndex: number = Math.floor(Math.random() * dna.route.length);
-            const currentCityIndex: number = dna.route[i];
-            dna.route[i] = dna.route[swapWithIndex];
-            dna.route[swapWithIndex] = currentCityIndex;
+    if (Math.random() < mutationRate) {
+        const mutationsAmount: number = getDNARouteRandomIndex(dna);
+        for (let i = 0; i < mutationsAmount; i++) {
+            const firstIndex: number = getDNARouteRandomIndex(dna);
+            const secondIndex: number = getDNARouteRandomIndex(dna);
+            const firstValue: number = dna.route[firstIndex];
+            dna.route[firstIndex] = dna.route[secondIndex];
+            dna.route[secondIndex] = firstValue;
         }
     }
 };

@@ -22,23 +22,19 @@ const SideNav = (props: {
     onStop: () => any
 }) => {
 
-    const start = () => props.onStart();
-
-    const stop = () => props.onStop();
-
 
     return (
         <div id='side-nav-container'>
             <div>
                 <p>Point amount: {props.points.length}</p>
                 <p>Combinations: {numberWithCommas(props.totalCombinations)} ({props.totalCombinations.toString().length})</p>
-                <div className='divider'>
-                    <Divider/>
-                </div>
-                <AlgoParameters disabled={props.isRunning} populationSize={props.populationSize}
-                                onPopulationSizeChange={props.onPopulationSizeChange} mutationRate={props.mutationRate}
-                                onMutationRateChange={props.onMutationRateChange}/>
             </div>
+            <div className='divider'>
+                <Divider/>
+            </div>
+            <AlgoParameters disabled={props.isRunning} populationSize={props.populationSize}
+                            onPopulationSizeChange={props.onPopulationSizeChange} mutationRate={props.mutationRate}
+                            onMutationRateChange={props.onMutationRateChange}/>
             <div className='divider'>
                 <Divider/>
             </div>
@@ -53,11 +49,11 @@ const SideNav = (props: {
             </div>
             <div>
                 <Button className='action-button' variant="contained" color="primary"
-                        disabled={props.isRunning || props.points.length === 0} onClick={start}>
+                        disabled={props.isRunning || props.points.length === 0} onClick={props.onStart}>
                     Start
                 </Button>
                 <Button className='action-button' variant="contained" color="secondary"
-                        disabled={!props.isRunning} onClick={stop}>
+                        disabled={!props.isRunning} onClick={props.onStop}>
                     Stop
                 </Button>
             </div>

@@ -19,8 +19,11 @@ const App = () => {
     const [totalCombinations, setTotalCombinations] = useState(0);
 
     const updatePoints = (points: LatLng[]) => {
-        setPoints(points);
-        setTotalCombinations(Array.from(Array(points.length).keys()).reduce((acc: number, curr: number) => acc * (curr + 1), 1));
+        if (!isRunning) {
+            setPoints(points);
+            setTotalCombinations(Array.from(Array(points.length).keys())
+                .reduce((acc: number, curr: number) => acc * (curr + 1), 1));
+        }
     };
 
     const runNextGeneration = () => {
@@ -37,7 +40,6 @@ const App = () => {
     const startAlgorithm = () => {
         initAlgorithm({populationSize, mutationRate}, points);
         setBestRouteEver(undefined);
-        runNextGeneration();
         setIsRunning(true);
     };
 

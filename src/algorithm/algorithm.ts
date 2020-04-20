@@ -13,6 +13,12 @@ let generation: Generation;
 
 const randomizeRoute = (): number[] => shuffleArray(createIndexArray(points.length, 1));
 
+const createPopulation = () => {
+    for (let i = 0; i < params.populationSize; i++) {
+        population.push({fitness: -1, route: randomizeRoute()})
+    }
+};
+
 const getDNAFullLatLngRoute = (dna: DNA): LatLng[] =>
     [points[0], ...dna.route.map(index => points[index]), points[0]];
 
@@ -31,7 +37,6 @@ const selectDNAForBreeding = (totalFitness: number): DNA => {
             return dna;
         }
     }
-
     return population[0];
 };
 
@@ -40,9 +45,7 @@ const naturalSelection = () => {
     const newPopulation: DNA[] = [];
 
     population.forEach(() => {
-        const partnerA: DNA = selectDNAForBreeding(totalFitness);
-        const partnerB: DNA = selectDNAForBreeding(totalFitness);
-        const child: DNA = crossoverDNAs(partnerA, partnerB);
+        const child: DNA = crossoverDNAs(selectDNAForBreeding(totalFitness), selectDNAForBreeding(totalFitness));
         mutateDNA(child, params.mutationRate);
         newPopulation.push(child);
     });
@@ -74,9 +77,6 @@ export const initAlgorithm = (algoParams: AlgoParams, travelPoints: LatLng[]) =>
     population = [];
     points = travelPoints;
     generation = {count: 0, executionTime: -1};
-
-    for (let i = 0; i < params.populationSize; i++) {
-        population.push({fitness: -1, route: randomizeRoute()})
-    }
+    createPopulation();
     calculatePopulationFitness();
 };

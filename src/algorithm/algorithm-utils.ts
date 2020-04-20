@@ -27,7 +27,6 @@ const calculateDistance = (first: LatLng, second: LatLng): number => {
     return Math.sqrt((xDistance ** 2) + (yDistance ** 2));
 };
 
-export const calculateRouteDistance = (route: LatLng[]): number => {
-    return route.reduce((acc: number, curr: LatLng, index: number) =>
+export const calculateRouteDistance = (route: LatLng[]): number =>
+    route.reduce((acc: number, curr: LatLng, index: number) =>
         acc + calculateDistance(curr, route[(index + 1) % route.length]), 0);
-};
