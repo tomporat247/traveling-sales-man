@@ -14,6 +14,7 @@ let generation: Generation;
 const randomizeRoute = (): number[] => shuffleArray(createIndexArray(points.length, 1));
 
 const createPopulation = () => {
+    population = [];
     for (let i = 0; i < params.populationSize; i++) {
         population.push({fitness: -1, route: randomizeRoute()})
     }
@@ -56,10 +57,9 @@ export const getGeneration = (): Generation => generation;
 
 export const getBestRoute = (): BestRoute => {
     const bestDNA: DNA = population.reduce((acc: DNA, curr: DNA) => acc.fitness > curr.fitness ? acc : curr);
-    return {
-        route: getDNAFullLatLngRoute(bestDNA),
-        totalDistance: (1 / bestDNA.fitness)
-    };
+    const route: LatLng[] = getDNAFullLatLngRoute(bestDNA);
+    const totalDistance: number = calculateRouteDistance(route);
+    return {route, totalDistance};
 };
 
 export const evolve = () => {
@@ -74,7 +74,6 @@ export const evolve = () => {
 
 export const initAlgorithm = (algoParams: AlgoParams, travelPoints: LatLng[]) => {
     params = algoParams;
-    population = [];
     points = travelPoints;
     generation = {count: 0, executionTime: -1};
     createPopulation();
